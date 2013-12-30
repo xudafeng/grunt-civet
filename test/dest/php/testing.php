@@ -1,48 +1,239 @@
+<?php 
 
-    data-xdata='$${stringify(chart.xdata)}' data-ydata='$${stringify(chart.ydata)}' 
+echo<<<EOT
+
+    data-xdata='
+EOT;
+
+echo $stringify(chart["xdata"]);
 
 
-    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline" && v == false}
+echo<<<EOT
+' data-ydata='
+EOT;
 
-                    {@else if v.auditStatus.name== "auditing" || v.auditStatus.name == "refused"}
+echo $stringify(chart["ydata"]);
 
-                    {@/if} 
-    {@each list as item, i}
-    {@each item as obj, j}
-       <div id="${i}${j}"> </div>
-    {@/each}
-{@/each}
+
+echo<<<EOT
+' 
+
+
     
-    <option data-chartCfg = '{ "bars":{ "css":{"background-color" : {@if index/2 == 0 } "#B41800" {@else} "#F8941C" {@/if} }' {@if model.state=="auditing"} selected{@/if} value ="auditing">待审核</option>
-{@if !success}foo{@/if}
+EOT;
+if($v["auditStatus"]["name"] == "online" || $v["auditStatus"]["name"] == "offline" && $v == $false){
 
-    $${stringify(obj)}
-
-    ${url()}
-
-    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline"}
-    {@/if}
+echo<<<EOT
 
 
-    {@if list == 1}
+                    
+EOT;
+} elseif ($v["auditStatus"]["name"] == "auditing" || $v["auditStatus"]["name"] == "refused"){
+
+echo<<<EOT
+
+
+                    
+EOT;
+}
+
+echo<<<EOT
+ 
+    
+EOT;
+foreach($list as $i => $item){
+
+echo<<<EOT
+
+    
+EOT;
+foreach($item as $j => $obj){
+
+echo<<<EOT
+
+       <div id="
+EOT;
+
+echo $i;
+
+echo $j;
+
+
+echo<<<EOT
+"> </div>
+    
+EOT;
+}
+
+echo<<<EOT
+
+
+EOT;
+}
+
+echo<<<EOT
+
+    
+    <option data-chartCfg = '{ "bars":{ "css":{"background-color" : 
+EOT;
+if($index/2 == 0){
+
+echo<<<EOT
+ "#B41800" 
+EOT;
+} else {
+
+echo<<<EOT
+ "#F8941C" 
+EOT;
+}
+
+echo<<<EOT
+ }' 
+EOT;
+if($model["state"] == "auditing"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="auditing">待审核</option>
+
+EOT;
+if( ! $success){
+
+echo<<<EOT
+foo
+EOT;
+}
+
+echo<<<EOT
+
+
+    
+EOT;
+
+echo $stringify(obj);
+
+
+echo<<<EOT
+
+
+    
+EOT;
+
+echo $url();
+
+
+echo<<<EOT
+
+
+    
+EOT;
+if($v["auditStatus"]["name"] == "online" || $v["auditStatus"]["name"] == "offline"){
+
+echo<<<EOT
+
+    
+EOT;
+}
+
+echo<<<EOT
+
+
+
+    
+EOT;
+if($list == 1){
+
+echo<<<EOT
+
     ceshi1
-    {@else if list ==2}
-    ceshi2
-    {@else}
-    ceshiif
-    {@/if}
     
-    
-{@each list as item}
-我是测试${item}
-{@/each}
+EOT;
+} elseif ($list == 2){
 
-{@each list.shuxing as item}
-我是测试${item}
-{@/each}
-{@each list.shuxing.shuxinger as item}
-我是测试${item}
-{@/each}
+echo<<<EOT
+
+    ceshi2
+    
+EOT;
+} else {
+
+echo<<<EOT
+
+    ceshiif
+    
+EOT;
+}
+
+echo<<<EOT
+
+    
+    
+
+EOT;
+foreach($list as $item){
+
+echo<<<EOT
+
+我是测试
+EOT;
+
+echo $item;
+
+
+echo<<<EOT
+
+
+EOT;
+}
+
+echo<<<EOT
+
+
+
+EOT;
+foreach($list["shuxing"] as $item){
+
+echo<<<EOT
+
+我是测试
+EOT;
+
+echo $item;
+
+
+echo<<<EOT
+
+
+EOT;
+}
+
+echo<<<EOT
+
+
+EOT;
+foreach($list["shuxing"]["shuxinger"] as $item){
+
+echo<<<EOT
+
+我是测试
+EOT;
+
+echo $item;
+
+
+echo<<<EOT
+
+
+EOT;
+}
+
+echo<<<EOT
+
 
 <!--#def {
     "success": true, 
@@ -107,14 +298,43 @@
 <script src="http://g.tbcdn.cn/mui/seed/1.1.7/seed.js"></script> 
 
 <input type="hidden" name="csrf_token" value="111" />
-<div class="control-section" data-chartCfg = '{ "bars":{ "css":{"background-color" : {@if index/2 == 0 } "#B41800" {@else} "#F8941C" {@/if} }'>
+<div class="control-section" data-chartCfg = '{ "bars":{ "css":{"background-color" : 
+EOT;
+if($index/2 == 0){
+
+echo<<<EOT
+ "#B41800" 
+EOT;
+} else {
+
+echo<<<EOT
+ "#F8941C" 
+EOT;
+}
+
+echo<<<EOT
+ }'>
     <form id="postForm" method="get" action="#">
     <ul class="ul-query">
         <li>
             <span class="li-description">创建时间：</span>
-            <input type="text" class="calendarNeeded ks-select-calendar" name="startTime" value="${model.startTime}"/>
+            <input type="text" class="calendarNeeded ks-select-calendar" name="startTime" value="
+EOT;
+
+echo $model["startTime"];
+
+
+echo<<<EOT
+"/>
             <span class="rangeToText">至</span>
-            <input type="text" class="calendarNeeded ks-select-calendar" name="endTime" value="${model.endTime}"/>
+            <input type="text" class="calendarNeeded ks-select-calendar" name="endTime" value="
+EOT;
+
+echo $model["endTime"];
+
+
+echo<<<EOT
+"/>
             <span class="timeSelector" timeRange="0">今天</span>
             <span class="timeSelector" timeRange="7">最近7天</span>
             <span class="timeSelector" timeRange="30">最近1个月</span>
@@ -124,13 +344,34 @@
 
         <li>
             <span class="li-description">推广名称：</span>
-            <input class="adName" type="text"  name="name" value="${model.name}" />
+            <input class="adName" type="text"  name="name" value="
+EOT;
+
+echo $model["name"];
+
+
+echo<<<EOT
+" />
             <a id="queryBtn" href="javascript:void(0)" class="ui-btn-m queryBtn">查询</a>
             
         </li>
     </ul>
-    <input type="hidden" name="state" value="${model.state}" />
-    <input type="hidden" name="page" value="${model.page}" />
+    <input type="hidden" name="state" value="
+EOT;
+
+echo $model["state"];
+
+
+echo<<<EOT
+" />
+    <input type="hidden" name="page" value="
+EOT;
+
+echo $model["page"];
+
+
+echo<<<EOT
+" />
     </form>
 </div>
 
@@ -145,50 +386,201 @@
                 <th class="col3">推广数量</th>
                 <th class="col4">
                     <select id="stateSelector" name="state">
-                        <option {@if model.state==""} selected{@/if} value ="">全部</option>
-                        <option {@if model.state=="auditing"} selected{@/if} value ="auditing">待审核</option>
-                        <option {@if model.state=="passed"} selected{@/if} value ="passed">审核通过</option>
-                        <option {@if model.state=="refused"} selected{@/if} value ="refused">审核不通过</option>
-                        <option {@if model.state=="online"} selected{@/if} value ="online">推广中</option>
-                        <option {@if model.state=="offline"} selected{@/if} value ="offline">推广结束</option>
+                        <option 
+EOT;
+if($model["state"] == ""){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="">全部</option>
+                        <option 
+EOT;
+if($model["state"] == "auditing"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="auditing">待审核</option>
+                        <option 
+EOT;
+if($model["state"] == "passed"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="passed">审核通过</option>
+                        <option 
+EOT;
+if($model["state"] == "refused"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="refused">审核不通过</option>
+                        <option 
+EOT;
+if($model["state"] == "online"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="online">推广中</option>
+                        <option 
+EOT;
+if($model["state"] == "offline"){
+
+echo<<<EOT
+ selected
+EOT;
+}
+
+echo<<<EOT
+ value ="offline">推广结束</option>
                     </select>
                 </th>
                 <th class="col5">操作</th>
             </tr>
         </thead>
 
-        {@each model.promotions as v,k}
+        
+EOT;
+foreach($model["promotions"] as $k => $v){
+
+echo<<<EOT
+
             <tr class="detailRow">
                 <td>
-                    ${v.gmtCreate}
-                </td>
-                <td>
-                    <span class="mouseInteractionEnabed"><a href="javascript:void(0)">${v.name}</a></span><br>
-                    ${v.gmtStart} - ${v.gmtEnd}
+                    
+EOT;
+
+echo $v["gmtCreate"];
+
+
+echo<<<EOT
 
                 </td>
-                <td>${v.marketingAmount}</td>
                 <td>
-                    {@if v.auditStatus.name == "refused"}
-                        审核不通过<br>
-                        ${v.reason}
-                    {@else}
-                        ${v.auditStatus.value}
-                    {@/if}
+                    <span class="mouseInteractionEnabed"><a href="javascript:void(0)">
+EOT;
+
+echo $v["name"];
+
+
+echo<<<EOT
+</a></span><br>
+                    
+EOT;
+
+echo $v["gmtStart"];
+
+
+echo<<<EOT
+ - 
+EOT;
+
+echo $v["gmtEnd"];
+
+
+echo<<<EOT
+
+
                 </td>
                 <td>
-                    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline"}
+EOT;
+
+echo $v["marketingAmount"];
+
+
+echo<<<EOT
+</td>
+                <td>
+                    
+EOT;
+if($v["auditStatus"]["name"] == "refused"){
+
+echo<<<EOT
+
+                        审核不通过<br>
+                        
+EOT;
+
+echo $v["reason"];
+
+
+echo<<<EOT
+
+                    
+EOT;
+} else {
+
+echo<<<EOT
+
+                        
+EOT;
+
+echo $v["auditStatus"]value"];
+
+
+echo<<<EOT
+
+                    
+EOT;
+}
+
+echo<<<EOT
+
+                </td>
+                <td>
+                    
+EOT;
+if($v["auditStatus"]["name"] == "online" || $v["auditStatus"]["name"] == "offline"){
+
+echo<<<EOT
+
                         <span class="mouseInteractionEnabed">查看效果</span>
-                    {@else if v.auditStatus.name== "auditing" || v.auditStatus.name == "refused"}
+                    
+EOT;
+} elseif ($v["auditStatus"]["name"] == "auditing" || $v["auditStatus"]["name"] == "refused"){
+
+echo<<<EOT
+
                         <span class="mouseInteractionEnabed"><a href="javascript:void(0)">编辑</a></span>  
                         <span class="J_deleteBtn mouseInteractionEnabed">删除</span>
                         <form class="J_deleteForm" method="post" action="/delete">
                             <input type="hidden" name="csrf_tmp" value="hey">
-                            <input type="hidden" name="id" value="${v.id}">
+                            <input type="hidden" name="id" value="
+EOT;
+
+echo $v["id"];
+
+
+echo<<<EOT
+">
                             <input type="hidden" name="action" value="marketing_action" />
                             <input type="hidden" name="event_submit_do_delete" value="any" />
                         </form>
-                    {@/if}
+                    
+EOT;
+}
+
+echo<<<EOT
+
 
                 </td>
 
@@ -200,11 +592,30 @@
 
             </tr>
            
-        {@/each}
+        
+EOT;
+}
+
+echo<<<EOT
+
 
     </table>
 
-    <div id="J_Page" currentPage="${model.page}" pageCount="${model.totalPage}"></div>
+    <div id="J_Page" currentPage="
+EOT;
+
+echo $model["page"];
+
+
+echo<<<EOT
+" pageCount="
+EOT;
+
+echo $model["totalPage"];
+
+
+echo<<<EOT
+"></div>
 </div>
 
 <script type="text/javascript">
@@ -361,3 +772,7 @@
 
 
 
+
+EOT;
+
+?>undefined

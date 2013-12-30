@@ -5,71 +5,30 @@
  * Copyright (c) 2013 xudafeng
  * Licensed under the MIT license.
  */
-var fs = require('fs');
-var path = require('path');
-var civet = require('civet');
 'use strict';
-
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>',
-      ],
-      options: {
-        jshintrc: '.jshintrc',
-      },
-    },
-
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp'],
-    },
-
-    // Configuration to be run (and then tested).
-    civet: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-    },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
-    },
-
-  });
-
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'civet', 'nodeunit']);
-
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
-
+module.exports = function (grunt) {
+    grunt.initConfig({
+        civet: {
+            buildVM:{
+                options:{
+                    'type':'velocity'
+                },
+                files:{
+                    'test/dest/vm/123.vm' : 'test/fixtures/123',
+                    'test/dest/vm/testing.vm': 'test/fixtures/testing'
+                }
+            },
+            buildPHP:{
+                options:{
+                    'type':'php'
+                },
+                files:{
+                    'test/dest/php/123.php' : 'test/fixtures/123',
+                    'test/dest/php/testing.php' : 'test/fixtures/testing'
+                }
+            }
+        }
+    });
+    grunt.loadTasks('tasks');
+    grunt.registerTask('default', ['civet']);
 };

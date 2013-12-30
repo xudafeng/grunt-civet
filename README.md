@@ -5,8 +5,6 @@
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
-
 ```shell
 npm install grunt-civet --save-dev
 ```
@@ -19,66 +17,42 @@ grunt.loadNpmTasks('grunt-civet');
 
 ## The "civet" task
 
-### Overview
-In your project's Gruntfile, add a section named `civet` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  civet: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
-```
-
 ### Options
 
-#### options.separator
+#### options.type
 Type: `String`
-Default value: `',  '`
+Default value: `'velocity  '`
 
 A string value that is used to do something with whatever.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+And if can be 'velocity' or 'php';
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  civet: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
 grunt.initConfig({
-  civet: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    civet: {
+        buildVM:{
+            options:{
+                'type':'velocity'
+            },
+            files:{
+                'test/dest/vm/123.vm' : 'test/fixtures/123',
+                'test/dest/vm/testing.vm': 'test/fixtures/testing'
+            }
+        },
+        buildPHP:{
+            options:{
+                'type':'php'
+            },
+            files:{
+                'test/dest/php/123.php' : 'test/fixtures/123',
+                'test/dest/php/testing.php' : 'test/fixtures/testing'
+            }
+        }
+    }
 });
 ```
 
@@ -86,4 +60,4 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+v 0.1.1

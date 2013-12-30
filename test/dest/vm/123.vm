@@ -1,48 +1,50 @@
 
-    data-xdata='$${stringify(chart.xdata)}' data-ydata='$${stringify(chart.ydata)}' 
+    data-xdata='$!securityUtil.escapeJson($!chart.xdata)' data-ydata='$!securityUtil.escapeJson($!chart.ydata)' 
 
 
-    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline" && v == false}
+    #if($!v.auditStatus.name == "online" || $!v.auditStatus.name == "offline" && $!v == false)
 
-                    {@else if v.auditStatus.name== "auditing" || v.auditStatus.name == "refused"}
+                    #elseif($!v.auditStatus.name == "auditing" || $!v.auditStatus.name == "refused")
 
-                    {@/if} 
-    {@each list as item, i}
-    {@each item as obj, j}
-       <div id="${i}${j}"> </div>
-    {@/each}
-{@/each}
+                    #end 
+    #foreach($!item in $!list)
+#set($i=$!velocityCount)
+    #foreach($!obj in $!item)
+#set($j=$!velocityCount)
+       <div id="$!{i}$!{j}"> </div>
+    #end
+#end
     
-    <option data-chartCfg = '{ "bars":{ "css":{"background-color" : {@if index/2 == 0 } "#B41800" {@else} "#F8941C" {@/if} }' {@if model.state=="auditing"} selected{@/if} value ="auditing">待审核</option>
-{@if !success}foo{@/if}
+    <option data-chartCfg = '{ "bars":{ "css":{"background-color" : #if($!index/2 == 0) "#B41800" #else "#F8941C" #end }' #if($!model.state == "auditing") selected#end value ="auditing">待审核</option>
+#if( ! $!success)foo#end
 
-    $${stringify(obj)}
+    $!securityUtil.escapeJson($!obj)
 
-    ${url()}
+    $rundata.getRequest().getRequestURI()
 
-    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline"}
-    {@/if}
+    #if($!v.auditStatus.name == "online" || $!v.auditStatus.name == "offline")
+    #end
 
 
-    {@if list == 1}
+    #if($!list == 1)
     ceshi1
-    {@else if list ==2}
+    #elseif($!list == 2)
     ceshi2
-    {@else}
+    #else
     ceshiif
-    {@/if}
+    #end
     
     
-{@each list as item}
-我是测试${item}
-{@/each}
+#foreach($!item in $!list)
+我是测试$!{item}
+#end
 
-{@each list.shuxing as item}
-我是测试${item}
-{@/each}
-{@each list.shuxing.shuxinger as item}
-我是测试${item}
-{@/each}
+#foreach($!item in $!list.shuxing)
+我是测试$!{item}
+#end
+#foreach($!item in $!list.shuxing.shuxinger)
+我是测试$!{item}
+#end
 
 <!--#def {
     "success": true, 
@@ -107,14 +109,14 @@
 <script src="http://g.tbcdn.cn/mui/seed/1.1.7/seed.js"></script> 
 
 <input type="hidden" name="csrf_token" value="111" />
-<div class="control-section" data-chartCfg = '{ "bars":{ "css":{"background-color" : {@if index/2 == 0 } "#B41800" {@else} "#F8941C" {@/if} }'>
+<div class="control-section" data-chartCfg = '{ "bars":{ "css":{"background-color" : #if($!index/2 == 0) "#B41800" #else "#F8941C" #end }'>
     <form id="postForm" method="get" action="#">
     <ul class="ul-query">
         <li>
             <span class="li-description">创建时间：</span>
-            <input type="text" class="calendarNeeded ks-select-calendar" name="startTime" value="${model.startTime}"/>
+            <input type="text" class="calendarNeeded ks-select-calendar" name="startTime" value="$!{model.startTime}"/>
             <span class="rangeToText">至</span>
-            <input type="text" class="calendarNeeded ks-select-calendar" name="endTime" value="${model.endTime}"/>
+            <input type="text" class="calendarNeeded ks-select-calendar" name="endTime" value="$!{model.endTime}"/>
             <span class="timeSelector" timeRange="0">今天</span>
             <span class="timeSelector" timeRange="7">最近7天</span>
             <span class="timeSelector" timeRange="30">最近1个月</span>
@@ -124,13 +126,13 @@
 
         <li>
             <span class="li-description">推广名称：</span>
-            <input class="adName" type="text"  name="name" value="${model.name}" />
+            <input class="adName" type="text"  name="name" value="$!{model.name}" />
             <a id="queryBtn" href="javascript:void(0)" class="ui-btn-m queryBtn">查询</a>
             
         </li>
     </ul>
-    <input type="hidden" name="state" value="${model.state}" />
-    <input type="hidden" name="page" value="${model.page}" />
+    <input type="hidden" name="state" value="$!{model.state}" />
+    <input type="hidden" name="page" value="$!{model.page}" />
     </form>
 </div>
 
@@ -145,50 +147,51 @@
                 <th class="col3">推广数量</th>
                 <th class="col4">
                     <select id="stateSelector" name="state">
-                        <option {@if model.state==""} selected{@/if} value ="">全部</option>
-                        <option {@if model.state=="auditing"} selected{@/if} value ="auditing">待审核</option>
-                        <option {@if model.state=="passed"} selected{@/if} value ="passed">审核通过</option>
-                        <option {@if model.state=="refused"} selected{@/if} value ="refused">审核不通过</option>
-                        <option {@if model.state=="online"} selected{@/if} value ="online">推广中</option>
-                        <option {@if model.state=="offline"} selected{@/if} value ="offline">推广结束</option>
+                        <option #if($!model.state == "") selected#end value ="">全部</option>
+                        <option #if($!model.state == "auditing") selected#end value ="auditing">待审核</option>
+                        <option #if($!model.state == "passed") selected#end value ="passed">审核通过</option>
+                        <option #if($!model.state == "refused") selected#end value ="refused">审核不通过</option>
+                        <option #if($!model.state == "online") selected#end value ="online">推广中</option>
+                        <option #if($!model.state == "offline") selected#end value ="offline">推广结束</option>
                     </select>
                 </th>
                 <th class="col5">操作</th>
             </tr>
         </thead>
 
-        {@each model.promotions as v,k}
+        #foreach($!v in $!model.promotions)
+#set($k=$!velocityCount)
             <tr class="detailRow">
                 <td>
-                    ${v.gmtCreate}
+                    $!{v.gmtCreate}
                 </td>
                 <td>
-                    <span class="mouseInteractionEnabed"><a href="javascript:void(0)">${v.name}</a></span><br>
-                    ${v.gmtStart} - ${v.gmtEnd}
+                    <span class="mouseInteractionEnabed"><a href="javascript:void(0)">$!{v.name}</a></span><br>
+                    $!{v.gmtStart} - $!{v.gmtEnd}
 
                 </td>
-                <td>${v.marketingAmount}</td>
+                <td>$!{v.marketingAmount}</td>
                 <td>
-                    {@if v.auditStatus.name == "refused"}
+                    #if($!v.auditStatus.name == "refused")
                         审核不通过<br>
-                        ${v.reason}
-                    {@else}
-                        ${v.auditStatus.value}
-                    {@/if}
+                        $!{v.reason}
+                    #else
+                        $!{v.auditStatus.value}
+                    #end
                 </td>
                 <td>
-                    {@if v.auditStatus.name == "online" || v.auditStatus.name == "offline"}
+                    #if($!v.auditStatus.name == "online" || $!v.auditStatus.name == "offline")
                         <span class="mouseInteractionEnabed">查看效果</span>
-                    {@else if v.auditStatus.name== "auditing" || v.auditStatus.name == "refused"}
+                    #elseif($!v.auditStatus.name == "auditing" || $!v.auditStatus.name == "refused")
                         <span class="mouseInteractionEnabed"><a href="javascript:void(0)">编辑</a></span>  
                         <span class="J_deleteBtn mouseInteractionEnabed">删除</span>
                         <form class="J_deleteForm" method="post" action="/delete">
                             <input type="hidden" name="csrf_tmp" value="hey">
-                            <input type="hidden" name="id" value="${v.id}">
+                            <input type="hidden" name="id" value="$!{v.id}">
                             <input type="hidden" name="action" value="marketing_action" />
                             <input type="hidden" name="event_submit_do_delete" value="any" />
                         </form>
-                    {@/if}
+                    #end
 
                 </td>
 
@@ -200,11 +203,11 @@
 
             </tr>
            
-        {@/each}
+        #end
 
     </table>
 
-    <div id="J_Page" currentPage="${model.page}" pageCount="${model.totalPage}"></div>
+    <div id="J_Page" currentPage="$!{model.page}" pageCount="$!{model.totalPage}"></div>
 </div>
 
 <script type="text/javascript">
@@ -361,3 +364,4 @@
 
 
 
+undefined
