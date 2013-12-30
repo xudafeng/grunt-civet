@@ -5,7 +5,9 @@
  * Copyright (c) 2013 xudafeng
  * Licensed under the MIT license.
  */
-
+var fs = require('fs');
+var path = require('path');
+var civet = require('civet');
 'use strict';
 
 module.exports = function(grunt) {
