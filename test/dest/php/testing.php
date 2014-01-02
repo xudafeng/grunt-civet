@@ -775,4 +775,4 @@ echo<<<EOT
 
 EOT;
 
-?>undefined
+?>
