@@ -36,7 +36,6 @@ module.exports = function(grunt) {
                     src = civet.juicer2php(src);
                     break;
             }
-            src += options.punctuation;
             grunt.file.write(f.dest, src);
             grunt.log.writeln('civet'.rainbow+':File '+'"'.yellow + f.dest.yellow + '"'.yellow+' created.');
         });
