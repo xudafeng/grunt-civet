@@ -30,15 +30,15 @@
   },
   "dependencies": {
     "civet": "*",
-    "colors":"*"
+    "colors": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "civet": "*",
-    "colors":"*"
+    "colors": "*"
   },
   "peerDependencies": {
-    "grunt": "~0.4.2"
+    "grunt": ">=0.4.0"
   },
   "keywords": [
     "gruntplugin"
